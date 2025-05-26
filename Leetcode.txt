@@ -1,0 +1,310 @@
+
+// Is String Valid (Paranthesis)
+
+public boolean isValid(String s){
+	
+	Stack<Character> stack = new Stack<>();
+	
+	for(char c : s.toCharArray()){
+		
+		switch(c){
+			case ')': if(!stack.isEmpty() && stack.peek() == '('){
+					stack.pop();
+					}
+				else return false;
+				break;
+			case '}': if(!stack.isEmpty() && stack.peek() == '{'){
+					stack.pop();
+					}
+				else return false;
+				break;
+			case ']': if(!stack.isEmpty() && stack.peek() == '['){
+					stack.pop();
+					}
+				else return false;
+				break;
+			default: stack.push(c);
+		}
+	}
+	
+	return stack.isEmpty()?true:false; 
+}
+
+
+
+// 71 -> Simplify Path
+
+public String simplifyPath(String path)
+{
+	Stack<String> stack = new Stack<>();
+	String sb = new String();
+	
+	String[] arr = path.split("/");
+	
+	for(String s : arr)
+	{
+		if(s.equals("") || s.equals(".") || (s.equals("..") && stack.isEmpty())) continue;
+		else if(s.equals("..")) stack.pop();
+		else stack.push(s);
+	}
+	
+	if(stack.isEmpty()) return "/";
+	for(String s : stack)
+	{
+		sb = sb + "/" + s;
+	}
+	
+	return sb;
+
+}
+
+
+// 155 -> Min Stack
+
+
+class MinStack {
+	
+	Stack<int[]> stack;
+	public MinStack() {
+        	stack = new Stack<>();
+    	}
+    
+    	public void push(int val) {
+		int min = stack.isEmpty()? val : Math.min(val,stack.peek()[1]);
+        	stack.push(new int[]{val, min});
+    	}
+    
+    	public void pop() {
+        	stack.pop();
+    	}
+    
+    	public int top() {
+        	return stack.peek()[0];
+    	}
+    
+    	public int getMin() {
+        	return stack.peek()[1];
+    	}
+}
+
+
+// 150 -> Reverse Polish
+
+
+
+class Solution {
+	public int evalRPN(String[] tokens) {
+        	
+		Stack<String> stack = new Stack<>();
+        	int second = 0, first =0, res = 0;
+
+		for(String s : tokens)
+		{
+			switch(s)
+			{	
+				case "+": second = stack.pop();
+				          first = stack.pop();	 
+					  res = first + second;
+					  stack.push(res);
+					  break;
+				case "-": second = stack.pop();
+				          first = stack.pop();	 
+					  res = first - second;
+					  stack.push(res);
+					  break;
+				case "*": second = stack.pop();
+				          first = stack.pop();	 
+					  res = first * second;
+					  stack.push(res);
+					  break;
+				case "/": int second = stack.pop();
+				          int first = stack.pop();	 
+					  res = first / second;	
+					  stack.push(res);
+					  break;
+				default: stack.push();
+			}
+		}
+		
+		return stack.pop();
+    	}
+}
+
+
+// 141 -> Linked list cycle
+
+public class Solution {
+    	public boolean hasCycle(ListNode head) {
+        	
+		if(head == null) return false;
+
+		ListNode slow = head, fast = head;
+		
+		while(fast != null && fast.next != null){
+			
+			slow = slow.next;
+			fast = fast.next.next;
+			if(slow == fast) return true;
+		}
+		
+		return false;
+		
+    	}
+}
+
+
+// 2  linked list
+
+class Solution {
+    	public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        
+		ListNode res = new ListNode(-1), resPtr = res;
+		int carry=0, sum =0;
+		while(l1 != null && l2 != null)
+		{
+			sum = l1.val + l2.val + carry;
+			if(sum > 9){
+				carry = 1;
+				sum = sum % 10;
+			}
+			else{
+				carry =0;
+			}
+			resPtr.next = new ListNode(sum);
+			resPtr = resPtr.next;
+			l1 = l1.next;
+			l2 = l2.next;
+			
+		}
+
+
+		while(l1 != null)
+		{
+			sum = l1.val + carry;
+			if(sum > 9){
+				carry = 1;
+				sum = sum % 10;
+			}
+			else{
+				carry =0;
+			}
+			resPtr.next = new ListNode(sum);
+			resPtr = resPtr.next;
+			l1 = l1.next;
+			
+		}
+
+		while(l2 != null)
+		{
+			sum = l2.val + carry;
+			if(sum > 9){
+				carry = 1;
+				sum = sum % 10;
+			}
+			else{
+				carry =0;
+			}
+			resPtr.next = new ListNode(sum);
+			resPtr = resPtr.next;
+			l2 = l2.next;
+			
+		}
+	
+		
+		if(carry > 0){
+			resPtr.next = new ListNode(carry);
+			resPtr = resPtr.next;
+		}
+		
+		return res.next;	
+	
+    	}
+}
+
+
+//  21 -> Merege sorted Linked list
+
+
+class Solution {
+    	public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        	ListNode res = new ListNode(-1), resPtr = res;
+		
+		while(l1 != null && l2 != null)g tf  
+		{
+			if(l1.val < l2.val)
+			{
+				resPtr.next = l1;
+				resPtr = resPtr.next;
+				l1 = l1.next;
+			}
+			else
+			{
+				resPtr.next = l2;
+				resPtr = resPtr.next;
+				l2 = l2.next;
+			}
+		}
+
+		if(l1 != null)
+		{
+			resPtr.next = l1;
+		}
+		
+		if(l2 != null)
+		{
+			resPtr.next = l2;
+		}
+
+		return res.next;
+
+
+    	}
+}
+
+// 138 -> Random Pointer
+
+class Solution {
+    	public Node copyRandomList(Node head) {
+        	if(head == null) return head;
+
+		Node res = new Node(-1), resPtr = res, ptr = head;
+		HashMap<Node,Node> map = new HashMap<>();
+		map.put(null, null);
+
+		while(ptr != null)
+		{	
+			map.put(ptr, new Node(ptr.val));
+			ptr = ptr.next;
+		}
+		ptr = head;
+
+		while(ptr != null)
+		{	
+			Node newNode = map.get(ptr);
+			resPtr.next = newNode;
+			resPtr = resPtr.next;
+			newNode.next = map.get(ptr.next);
+			newNode.random = map.get(ptr.random);
+			
+			ptr= ptr.next;
+		}
+		
+
+		return res.next;
+
+    	}
+}
+
+
+// 92 - reverse Linked List
+
+
+
+
+
+
+
+
+
+
+
