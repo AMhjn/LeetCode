@@ -1,0 +1,146 @@
+// 125 -> valid palindrome
+
+class Solution {
+    public boolean isPalindrome(String s) {
+        s = s.toLowerCase();
+	char[] arr = s.toCharArray();
+	int i=0, j= arr.length-1;
+
+	while(i < j){
+		while(i < j && !Character.isLetterOrDigit(arr[i])) i++;
+		while(i < j && !Character.isLetterOrDigit(arr[j])) j--;
+		
+		if(i < j && arr[i] == arr[j]){
+			i++;
+			j--;
+		}
+		else if(i >= j) return true;
+		else{
+			return false;
+		}
+		
+	}
+	return true;
+	
+    }
+}
+
+// 392 -> Is subsequence
+
+class Solution {
+    	public boolean isSubsequence(String s, String t) {
+        	
+		char[] sArr = s.toCharArray(), tArr = t.toCharArray();
+		if(s.length() > t.length()) return false;
+		
+		int i =0, j= 0;
+		while(j < t.length() && i < sArr.length){
+			if(tArr[j] == sArr[i]){
+				i++;
+			}
+			j++;
+		}
+		if(i>= s.length()) return true;
+		return false;
+    	}
+}
+
+// 167 - Two sum 2
+
+class Solution {
+    	public int[] twoSum(int[] numbers, int target) {
+        
+        	int i=0, j= numbers.length-1;
+        	while(i < j){
+			int left = numbers[i], right = numbers[j];
+      			if(left + right == target){
+				return new int[]{i+1, j+1};
+			}
+			else if(left + right < target){
+				i++;
+			}
+			else{
+				j--;
+			}    
+        	}
+		return new int[]{-1,-1};
+   	}
+}
+
+
+// 11 = Container with most water
+
+class Solution {
+    	public int maxArea(int[] height) {
+        	int i=0, j= height.length, maxAmount =0 ;
+		while(i < j){
+			int currAmount = (j-i)*(Math.min(height[j], height[j]));
+			maxAmount = Math.max(maxAmount, curAmount);
+			if(height[i] < height[j]){
+				i++;
+			}
+			else{
+				j--;
+			}
+		}
+		return maxAmount;
+		
+    	}
+}
+
+
+// 15 -> 3 Sum
+
+class Solution {
+    	public List<List<Integer>> threeSum(int[] nums) {
+		int n = nums.length;
+		HashSet<List<Integer>> set = new HashSet<>();
+		Arrays.sort(nums);
+		for(int i=0;i<n-2;i++)
+		{
+			if(i != 0 && nums[i-1] != nums[i])
+			{
+				int j=i+1, k = n-1, target = -nums[i];
+				while(j < k)
+				{
+					if(nums[j] + nums[k] == target)
+					{
+						set.add(new ArrayList<>(List.of(i,j,k)));
+						j++;
+						k--;	
+					}
+					else if(nums[j] + nums[k] < target)
+					{
+						j++;
+					}
+					else
+					{
+						k--;
+					}
+				} 	
+			}
+		}
+
+		return new ArrayList<>(set);
+        
+    	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
