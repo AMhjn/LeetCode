@@ -1,0 +1,247 @@
+// 28 -> First occurrence
+
+class Solution {
+    	public int strStr(String haystack, String needle) {
+  		char[] nArr = needle.toCharArray(), hArr = haystack.toCharArray();
+		
+		int i=0, j=0;
+		while(j < haystack.length()){
+			int temp = j;
+			while(i< needle.length() && j < haystack.length() && nArr[i] == hArr[temp])
+			{
+				i++;
+				temp++;
+			}
+			
+			if(i == needle.length()){
+				return j;
+			}
+			else if(j >= haystack.length()) return -1;
+			else{
+				j++;
+				i=0;
+			}
+		}
+		return -1;
+    	}
+}
+
+
+// 88 -> Merge sorted Array
+
+class Solution {
+    	public void merge(int[] nums1, int m, int[] nums2, int n) {
+        	
+		int ptr1 = m-1, ptr2 = n-1, resPtr = m+n-1;
+		while(ptr1 >= 0 && ptr2 >= 0){
+			if(nums1[ptr1] > nums2[ptr2]){
+				nums1[resPtr] = nums1[ptr1];
+				ptr1--;
+			}
+			else{
+				nums1[resPtr] = nums2[ptr2];
+				ptr2--;
+			}
+			resPtr--;
+		}
+
+		while(ptr1 >= 0){
+			
+				nums1[resPtr] = nums1[ptr1];
+				ptr1--;
+				resPtr--;
+		}
+		while(ptr2 >= 0){
+			
+				nums1[resPtr] = nums2[ptr2];
+				ptr2--;
+				resPtr--;
+		}
+    	}
+}
+
+
+// 27 -> Remove element
+
+class Solution {
+	public int removeElement(int[] nums, int val) {
+        	
+		int i =0, j = 0, k=0;
+		for(int i=0;i<nums.length;i++)
+		{
+			if(nums[i] != val){
+				nums[j++] = nums[i];
+				k++;
+			}
+		}
+		return k;
+	}
+}
+
+
+// 26 -> Remove Duplicates
+
+class Solution {
+	public int removeDuplicates(int[] nums) {
+        	
+		int i= 1,replace = 1, k=0;
+		while(i < nums.length){
+			if(nums[i] == nums[i-1]){
+				i++;
+			}
+			else{
+				nums[replace++] = nums[i++];
+				k++;
+			}
+		}
+		return k;
+	}
+}
+
+
+// 19 -> Majority Element
+
+class Solution {
+	public int majorityElement(int[] nums) {
+        	
+		int majElement = nums[0], majCount =1;
+		for(int i=1;i< nums.length;i++){
+			if(nums[i] != majElement){
+				majCount--;
+				if(majCount < 0){
+					majCount =1;
+					majElement = nums[i];
+				}
+			}
+			else{
+				majCount++;
+			}
+		}
+		return majElement;
+	}
+}
+
+
+// 121 -> sell stock
+
+class Solution {
+    	public int maxProfit(int[] prices) {
+        	int buy = prices[0], max = 0;
+		for(int i=1;i<prices.length;i++)
+		{
+			if(prices[i] > buy)
+			{
+				max = Math.max(max, prices[i]- buy);
+			}
+			else{
+				buy = prices[i];
+			}
+		}
+		return max;
+    	}
+}
+
+
+// 80 -> Remove duplicate 2
+
+class Solution {
+	public int removeDuplicates(int[] nums) {
+        	
+		int i=0,j=0,k=2,ptr =0;
+		
+		while(j < nums.length){
+			int count =0;
+			while(j< nums.length && nums[j]== nums[i])
+			{
+				if(count < k){
+					nums[ptr++]= nums[j];
+					count++;
+				}
+				j++;
+			}
+			if(j==nums.length) return ptr;
+			else{
+				i =j;
+			}
+		} 
+		return ptr;
+    	}
+}
+
+// 189 -> Rotate Array
+
+class Solution {
+    public void reverse(int[] nums, int start, int end){
+        
+        while(start < end){
+            int temp = nums[start];
+            nums[start] = nums[end];
+            nums[end] = temp;
+            start++;
+            end--;
+        }
+    }
+    public void rotate(int[] nums, int k) {
+        
+        int size = nums.length;
+        k = k % size;
+        if(size == 0 || k== 0) return;
+        
+        // reverse complete
+        reverse(nums,0, size-1);
+
+        // revrse first part    
+        reverse(nums, 0, k-1);
+        // reverse second part
+
+        reverse(nums, k, size-1);
+    }
+}
+
+
+// 238 -> Product of array 
+
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        
+        int[] left = new int[nums.length], right = new int[nums.length];
+
+        left[0] = right[nums.length-1] = 1; 
+        for(int i=1;i<nums.length;i++){
+            left[i] = left[i-1] * nums[i-1];
+        }
+
+        for(int i=nums.length-2;i>=0;i--){
+            right[i] = right[i+1] * nums[i+1];
+        }
+
+        for(int i=1;i<nums.length;i++){
+            right[i] *= left[i];
+        }
+
+        return right;
+    }
+}
+
+
+
+
+
+
+
+
+// 122 -> Buy and Sell stock -2
+
+class Solution {
+    	public int maxProfit(int[] prices) {
+     		   
+    	}
+}
+
+
+
+
+
+
+
+
