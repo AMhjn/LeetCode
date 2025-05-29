@@ -224,21 +224,94 @@ class Solution {
 }
 
 
-
-
-
-
-
-
-// 122 -> Buy and Sell stock -2
+// 55 -> Jump Game 
 
 class Solution {
-    	public int maxProfit(int[] prices) {
-     		   
+    	public boolean canJump(int[] nums) {
+        	int n = nums.length, i =0, max = 0;
+		while(i <= max)
+		{	
+			max = Math.max(max, i+nums[i]);
+			if(max >= n-1) return true;
+		}
+		return false;	
     	}
 }
 
 
+// 45 -> Jump Game 2
+
+class Solution {
+    	public int jump(int[] nums) {
+        	int[] dp = new int[nums.length];
+		Arrays.fill(dp,Integer.MAX_VALUE);
+		dp[0] = 0;
+		for(int i = 1;i<nums.length;i++){
+			for(int j=i-1;j>=0;j--)
+			{	
+				if(j+nums[j] >= i){
+					dp[i] = Math.min(dp[i],1+dp[j]);
+				}
+				
+			}
+		}
+		return dp[nums.length-1];
+    	}
+}
+
+
+// 134 - Gas Station
+
+class Solution {
+    	public int canCompleteCircuit(int[] gas, int[] cost) {
+       		int sumG =0, sumC=0;
+		int[] diff = new int[gas.length];
+
+		for(int i=0;i<gas.length;i++){
+			sumG += gas[i];
+			sumC += cost[i];
+			diff[i] = gas[i]-cost[i];
+		}
+		if(sumC > sumG) return -1;
+		
+		int sum =0, index =0;
+		for(int i=0;i<gas.length;i++){
+			sum += diff[i];
+			if(sum < 0){
+				sum =0;
+				index = i+1;
+			}
+			
+		}
+		return index;	
+    	}
+}
+
+
+// 274 -> h -INDEX
+
+class Solution {
+    	public int hIndex(int[] citations) {
+      		int size = citations.length;
+		Arrays.sort(citations);
+		int i =0, h =0;
+		while(i < size){
+			int curr = Math.min(size -i, citations[i]);
+			h = Math.max(h,curr);	
+			i++;	
+		}
+		return h;
+    	}
+}
+
+
+// 151 -> Reverse words
+
+class Solution {
+    	public String reverseWords(String s) {
+        
+    	}
+}
 
 
 
