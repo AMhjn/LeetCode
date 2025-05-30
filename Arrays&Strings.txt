@@ -308,10 +308,199 @@ class Solution {
 // 151 -> Reverse words
 
 class Solution {
-    	public String reverseWords(String s) {
+    public String reverseWords(String s) {
+        s = s.trim();
+        String[] arr =  s.split("\\s+");
+
+        int i=0, j= arr.length-1;
+        String temp = "";
+        while(i < j){
+            temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+            i++;
+            j--;
+        }
+        StringBuilder sb = new StringBuilder();
         
+        for(int k =0;k<arr.length;k++){
+            sb.append(arr[k]);
+            if(k!=arr.length-1){
+                sb.append(" ");
+            }
+        }
+        return sb.toString();
+    }
+} 
+
+
+// 380 -> Randomised Set
+
+class RandomizedSet {
+
+    List<Integer> list;
+    HashMap<Integer, Integer> map;
+    public RandomizedSet() {
+        list = new ArrayList<>();
+        map = new HashMap<>();
+    }
+    
+    public boolean insert(int val) {
+        
+        if(map.containsKey(val)){
+            return false;
+        }
+        list.add(val);
+        map.put(val,list.size()-1);
+        return true;
+    }
+    
+    public boolean remove(int val) {
+        if(!map.containsKey(val)) return false;
+
+        int ind = map.get(val), lastVal = list.get(list.size()-1);
+        list.set(ind,lastVal);
+        list.remove(list.size()-1);
+
+        map.put(lastVal, ind);
+        map.remove(val);
+        return true;
+    }
+    
+    public int getRandom() {
+        // int randInd = (int) (Math.random() * list.size());
+        Random random = new Random();
+
+        return list.get(random.nextInt(list.size()));
+    }
+}
+
+
+// buy & sell stock - 2
+
+
+class Solution {
+    	public int maxProfit(int[] prices) {
+            int n = prices.length;
+        	int[][] dp = new int[n+1][2];
+		dp[n][0]= 0;
+		dp[n][1]= 0;
+		int i= n-1;
+		while(i >=0){
+			dp[i][0] = Math.max(-prices[i]+dp[i+1][1],dp[i+1][0]);
+			dp[i][1] = Math.max(prices[i]+dp[i+1][0],dp[i+1][1]);
+			i--;
+		}
+		return Math.max(dp[0][0],0);
     	}
 }
+
+
+// 42 -> Trapping Rain water
+
+class Solution {
+    	public int trap(int[] height) {
+        	int total =0, n =height.length;
+		int[] left = new int[n], right = new int[n];
+		for(int i=1;i<n;i++){
+			left[i] = Math.max(left[i-1],height[i-1]);	
+		}
+		for(int i=n-2;i>=0;i--){
+			right[i] = Math.max(right[i+1],height[i+1]);	
+		}
+		for(int i=1;i<n;i++){	
+			total += Math.max(Math.min(left[i], right[i]) - height[i],0);
+		}
+		return total;
+    	}
+}
+
+
+// 135 -> Candy
+
+class Solution {
+    	public int candy(int[] ratings) {
+        	
+		int total =0, n = ratings.length;
+		int[] left = new int[n], right = new int[n];
+		left[0] =1; right[n-1] =1;
+		for(int i=1;i<n;i++){
+			if(ratings[i] > ratings[i-1]){
+				left[i] = left[i-1]+1;
+			}
+			else{
+				left[i] = 1;
+			}
+		}
+		for(int i=n-2;i>=0;i--){
+			if(ratings[i] > ratings[i+1]){
+				right[i] = right[i+1]+1;
+			}
+			else{
+				right[i] = 1;
+			}
+		}
+		for(int i=0;i<n;i++){
+			total += Math.max(left[i], right[i]);
+		}
+		return total;
+    	}
+}
+
+
+14 -> largest prefix
+
+
+class Solution {
+    public String longestCommonPrefix(String[] strs) {
+        
+        String prefix = strs[0];
+        for(int i=1;i<strs.length;i++){
+        	int j=0;
+		while(j< prefix.length() && j< strs[i].length() && strs[i].charAt(j) == prefix.charAt(j)){
+			j++;
+		}
+		prefix = prefix.substring(0,j);    
+        }
+		return prefix;
+    }
+}
+
+
+// 6 -> Zigzag
+
+
+class Solution {
+    public String convert(String s, int numRows) {
+        	int i=0;
+		StringBuilder[] sb = new StringBuilder[numRows];
+
+		while(i < s.length()){
+			int j=0;
+			while(i<s.length() && j<numRows-1){
+				sb[j].append(s.charAt(i));
+				j++;
+				i++;
+			}
+			while(i<s.length() && j > 0){
+				sb[j].append(s.charAt(i));
+				j--;
+				i++;
+			}
+
+		}
+		
+		StringBuilder res = new StringBuilder();
+		for(StringBuilder si : sb){
+			res.append(si.toString());
+		}
+		return res;
+    }
+}
+
+
+
+
 
 
 
