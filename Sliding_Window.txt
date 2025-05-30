@@ -1,0 +1,85 @@
+// 209 -> Minimum size subarray sum
+
+
+class Solution {
+    public int minSubArrayLen(int target, int[] nums) {
+     	
+	int i =0, j=0,n = nums.length,sum=0, min = Integer.MAX_VALUE;
+
+	while(j < n){
+		
+		sum += nums[j];
+		
+		while(sum >= target){
+			min = Math.min(min, j-i+1);
+			sum -= nums[i];
+			i++;
+		}
+		j++;		
+	}   
+	return min;
+    }
+}
+
+
+// 76 ->  Minimum Window Substring
+
+class Solution {
+    public String minWindow(String s, String t) {
+ 	HashMap<Character, Integer> map = new HashMap<>();
+	for(char c : t.toCharArray()){
+		map.put(c,map.getOrDefault(c,0)+1);
+	}      
+
+	int i=0, j=0, min = s.length()+1,required= map.size(),startInd=0, endInd =0;
+	while(j < s.length()){
+		char ch = s.charAt(j);
+		if(map.containsKey(ch)){
+            map.put(ch, map.get(ch)-1);
+            if(map.get(ch) == 0){
+                required--;
+            }
+
+            while(required == 0){
+                if(j-i+1 < min){
+                    min = j-i+1;
+                    startInd = i;
+                    endInd = j+1;
+                }
+
+                char temp = s.charAt(i);
+                if(map.containsKey(temp)){
+                    map.put(temp, map.get(temp)+1);
+                    if(map.get(temp) == 1){
+                        required++;
+                    }
+                }
+                i++;
+
+            }
+            
+        }
+        j++;
+	}
+
+	return  min == s.length() + 1 ? "" : s.substring(startInd, endInd);
+
+
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
