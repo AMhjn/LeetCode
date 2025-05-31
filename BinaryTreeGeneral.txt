@@ -1,0 +1,240 @@
+// 104 -> Maximum Depth of Binary Tree
+
+class Solution {
+    public int maxDepth(TreeNode root) {
+        if(root == null) return 0;
+	
+	int left = maxDepth(root.left), right = maxDepth(root.right);
+	return Math.max(left, right)+1;
+    }
+}
+
+
+// 100 -> Same Tree
+
+class Solution {
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        if(p == null && q == null) return true;
+	if(p == null || q == null) return false;
+	
+	if(p.val != q.val) return false;
+	return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+    }
+}
+
+
+// 226 -> Invert Binary Tree
+
+
+class Solution {
+    public TreeNode invertTree(TreeNode root) {
+        if(root == null) return null;
+	TreeNode left = invertTree(root.left), right = invertTree(root.right);		
+	root.left = right;
+	root.right = left;
+	return root;	
+
+    }
+}
+
+
+// 101 -> Symmetric Tree
+
+class Solution {
+	public boolean isSymmetric(TreeNode root1, TreeNode root2) {
+        	if(root1 == null && root2 == null) return true;
+		if(root1 == null || root2 == null) return false;
+		if(root1.val == root2.val){
+			return isSymmetric(root1.left, root2.right) && isSymmetric(root1.right, root2.left);
+		}
+		else return false;
+    }
+
+    public boolean isSymmetric(TreeNode root) {
+	if(root == null) return true;
+        return isSymmetric(root, root);
+    }	
+}
+
+
+// 112 -> Path Sum 
+
+class Solution {
+    public boolean hasPathSum(TreeNode root, int targetSum) {
+        if(root == null) return false;
+	targetSum -= root.val;
+	
+	if(target ==0 && root.left == null && root.right == null) return true;
+	return hasPathSum(root.left, targetSum) || hasPathSum(root.right, targetSum);
+    }
+}
+
+
+// 222 -> Count Complete Tree Nodes
+
+class Solution {
+
+	public int completeLevels(TreeNode root){
+		int lCount=0, rCount =0;
+		while(root.left != null){
+			lCount++;
+			root = root.left;
+		}
+		while(root.right != null){
+			rCount++;
+			root = root.right;
+		}
+		if(lCount == rCount) return lCount;
+		else return -1;
+	}
+	
+    public int countNodes(TreeNode root) {
+        if(root == null) return 0;
+	int isComplete = completeLevels(root);
+	if(isComplete > 0) return (int)(Math.pow(2,isComplete+1))-1;
+	return 1 + countNodes(root.left) + countNodes(root.right);
+	
+    }
+}
+
+
+// 129. Sum Root to Leaf Numbers
+
+
+class Solution {
+	
+	public int helper(TreeNode root,int val){
+		if(root = null) return 0;
+		if(root.left == null && root.right == null){
+			return (val* 10) + root.val;
+		}
+		int left = helper(root.left,(val*10)+ root.val), right = helper(root.right,(val*10)+ root.val); 
+		return left + right;
+	}
+
+    public int sumNumbers(TreeNode root) {
+	if(root ==null) return 0;
+	return helper(root, 0);
+	
+        
+    }
+}
+
+
+// 236. Lowest Common Ancestor of a Binary Tree
+
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if(root == null) return null;
+
+	if(root == p || root == q) return root;
+	
+	TreeNode left = lowestCommonAncestor(root.left, p, q), right = lowestCommonAncestor(root.right, p, q);
+	
+	if(left != null && right != null) return root;
+	if(left == null) return right;
+	return left;
+	
+    }
+}	
+
+
+// 173. Binary Search Tree Iterator
+
+class BSTIterator {
+	
+	ArrayList<Integer> list;
+	int ptr;
+	
+	public void inorder(TreeNode root){
+		if(root == null){
+			return;
+		}
+
+		inorder(root.left);
+		list.add(root.val);
+		inorder(root.right);
+	}
+    public BSTIterator(TreeNode root) {
+        list= new ArrayList<>();
+	ptr = -1;
+	inorder(root);
+    }
+    
+    public int next() {
+        ptr++;
+	return list.get(ptr);
+    }
+    
+    public boolean hasNext() {
+        if(ptr+1 >= list.size()) return false;
+	return true;
+    }
+}
+
+
+// 117. Populating Next Right Pointers in Each Node II
+
+
+class Solution {
+    public Node connect(Node root) {
+        
+	if(root == null) return null;
+	Queue<Node> q = new LinkedList<>();
+	q.add(root);
+
+	while(!q.isEmpty()){
+		int size = q.size();
+	
+		while(size > 0){
+			Node removed = q.remove();
+			if(size > 1){
+				removed.right = q.peek();
+			}
+			if(removed.left!= null){
+				q.add(removed.left);
+			}
+			if(removed.right!= null){
+				q.add(removed.right);
+			}
+			size--;
+		}
+	}
+	return root;	
+    }
+}
+
+
+// 124. Binary Tree Maximum Path Sum
+
+
+class Solution {
+    public int maxPathSum(TreeNode root) {
+        
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
