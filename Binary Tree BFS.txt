@@ -1,0 +1,166 @@
+
+// Binary Tree Right Side View
+
+
+class Solution {
+    public List<Integer> rightSideView(TreeNode root) {
+        	if(root == null) return new ArrayList<>();
+		List<Integer> res = new ArrayList<>();
+		Queue<TreeNode> queue = new LinkedList<>();
+		queue.add(root);
+		
+		while(!queue.isEmpty()){
+
+			int size = queue.size();
+			while(size > 0){
+				TreeNode used = queue.remove();
+				if(size == 1){
+					res.add(used.val);
+				}
+				
+				if(used.left != null){
+					queue.add(used.left);
+				}
+				if(used.right != null){
+					queue.add(used.right);
+				}
+				size--;
+
+			}
+		}
+		return res;
+    }
+}
+
+
+// 637. Average of Levels in Binary Tree
+
+
+class Solution {
+    public List<Double> averageOfLevels(TreeNode root) {
+
+		List<Double> res = new ArrayList<>();
+		if(root == null) return res;
+		Queue<TreeNode> que = new LinkedList<>();
+
+		que.add(root);
+		while(!que.isEmpty()){	
+			int size=que.size(), count=0;
+			double value =0.00000;
+			while(size > 0){
+				TreeNode used = que.remove();
+				value += used.val;
+				count++;
+				
+				if(used.left != null) que.add(used.left);
+				if(used.right != null) que.add(used.right);
+				size--;
+			}
+			res.add(value/count);
+		}
+
+		return res;
+    }
+}
+
+
+// 102. Binary Tree Level Order Traversal
+
+
+class Solution {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        
+
+	List<List<Integer>> res = new ArrayList<>();
+    	if(root == null) return res;
+	Queue<TreeNode> q = new LinkedList<>();
+
+	q.add(root);
+	while(!q.isEmpty()){
+	
+		int size = q.size();
+		List<Integer> levelList = new ArrayList<>();
+		while(size > 0){
+			TreeNode used = q.remove();
+			levelList.add(used.val);
+			
+			if(used.left != null) q.add(used.left);
+			if(used.right != null) q.add(used.right);
+			size--;
+		}
+		res.add(levelList);
+	}
+	return res;
+    }
+}
+
+
+// 103. Binary Tree Zigzag Level Order Traversal
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+
+        if(root == null) return new ArrayList<>();
+        List<List<Integer>> res = new ArrayList<>();
+        Queue<TreeNode> q = new LinkedList<>();
+
+        boolean org = true;
+        q.add(root);
+
+        while(!q.isEmpty()){
+
+            int size = q.size();
+            List<Integer> levelList= new ArrayList<>();
+            while(size > 0){
+
+                TreeNode used = q.remove();
+                levelList.add(used.val);
+
+                if(used.left != null)  q.add(used.left);
+                if(used.right != null)  q.add(used.right);
+                size--;
+            }
+                if(!org) Collections.reverse(levelList);
+                res.add(levelList);
+                org = !org;
+            
+
+        }
+        return res;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
