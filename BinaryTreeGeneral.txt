@@ -249,10 +249,70 @@ class Solution {
 }
 
 
+// 106. Construct Binary Tree from Inorder and Postorder Traversal
 
 
+class Solution {
+	HashMap<Integer, Integer> map;
+	
+	public TreeNode buildTree(int[] inorder, int inStart, int inEnd, int[] postorder, int postStart, int postEnd){
+		
+		if(inStart > inEnd || postStart > postEnd) return null;
+		if(inStart == inEnd) return new TreeNode(inorder[inStart]);
+		int lastElement = postorder[postEnd];
+		int lastElementInorderIndex = map.get(lastElement);
+		int numberOfLeftElements = lastElementInorderIndex - inStart;
+		
+		TreeNode newNode = new TreeNode(lastElement);
+		newNode.left = buildTree(inorder,inStart,lastElementInorderIndex-1,postorder,postStart,postStart+numberOfLeftElements-1);
+		newNode.right = buildTree(inorder,lastElementInorderIndex+1,inEnd,postorder,postStart+numberOfLeftElements,postEnd-1);
+		return newNode;
+	}
+
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+	
+        map = new HashMap<>();
+	for(int i=0;i<inorder.length;i++){
+		map.put(inorder[i],i);
+	}
+	return buildTree(inorder, 0, inorder.length-1, postorder, 0, postorder.length-1);
+    }
+}
 
 
+// 105. Construct Binary Tree from Preorder and Inorder Traversal
+
+
+class Solution {
+	HashMap<Integer, Integer> map;
+	public TreeNode buildTree(int[] preorder, int preStart, int preEnd, int[] inorder, int inStart, int inEnd) {
+        	
+		if(preStart < preEnd) return null;
+		if(prestart == preEnd) return new TreeNode(preorder[preStart]);
+
+		int firstElement = preorder[preStart];
+		int firstElementInorderIndex =  map.get(firstElement);
+		int numOfLeftElements = firstElementInorderIndex - prestart;
+		
+		TreeNode newNode = new TreeNode(firstElement);
+		newNode.left = buildTree(preorder, preStart+1, preStart + numOfLeftElements , inorder, inStart, firstElementInorderIndex-1);
+		newNode.rigth = buildTree(preorder,preStart + numOfLeftElements+1 , preEnd, inorder, firstElementInorderIndex+1, inEnd);
+		
+		return newNode;
+    }
+
+
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+
+		map = new HashMap<>();
+
+		for(int i=0;i<inorder.length;i++){
+			map.put(inorder[i],i);
+		}
+
+        	return buildTree(preorder, 0, preorder.length, inorder, 0, inorder.length);
+    }	
+}
 
 
 
