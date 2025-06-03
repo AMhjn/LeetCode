@@ -209,11 +209,44 @@ class Solution {
 
 
 class Solution {
+	int maxRes =0;
+	public int helper(TreeNode root){
+		if(root == null) return 0;
+		int left = helper(root.left), right = helper(root.right);
+		max = Math.max(max, Math.max(left, right));
+		max = Math.max(max, root.val + Math.max(left,0) + Math.max(right,0));
+		return root.val + Math.max(Math.max(left,right),0);
+	}
+
     public int maxPathSum(TreeNode root) {
-        
+        helper(root);
+	return max;
     }
 }
 
+
+114. Flatten Binary Tree to Linked List
+
+
+class Solution {
+	TreeNode curr;
+	public void preOrderHelper(TreeNode root){
+		if(root == null) return;
+		TreeNode orgRight = root.right, orgLeft = root.left;
+        curr.right = root;
+        curr.left = null;
+        curr = root;
+		preOrderHelper(orgLeft);
+		preOrderHelper(orgRight);
+	}
+
+
+    public void flatten(TreeNode root) {
+     		if(root == null) return;
+		curr = new TreeNode(-1);
+		preOrderHelper(root);   
+    }
+}
 
 
 
